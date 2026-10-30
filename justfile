@@ -47,6 +47,8 @@ seed:
 
 # Production build into dist/, then compare every page with the scraped original.
 build:
+    @# a gitignored file under public/ or src/ works locally but is missing on Netlify
+    @if git status --short --ignored public src | grep '^!!'; then echo "^ gitignored, so Netlify won't get it" >&2; exit 1; fi
     mise exec -- npx astro build
     @if [ -d _scrape/pages ]; then mise exec -- node scripts/check.mjs; fi
 

@@ -2,9 +2,9 @@
 .env
 .DS_Store
 node_modules/
-dist/
-.astro/
-_scrape/
+/dist/
+/.astro/
+/_scrape/
 .dev.pid
 .dev.log
-_build_plan/
+/_build_plan/
