@@ -118,6 +118,27 @@ for (const [path, $] of Object.entries(docs)) {
   };
 }
 
+// Finsweet Attributes v2 finds its own <script> with
+// `script[type=module][src="${import.meta.url}"]`, i.e. an exact match on the absolute
+// URL. On Webflow the src was the absolute jsDelivr URL; self-hosted it's a relative
+// path, so nothing matched, `fs-list` was never read and the FAQ filter never loaded.
+// Create the tag at runtime with an absolute src so the match works on any host.
+const FS_TAG = /<script async="" type="module" src="(\/vendor\/[^"]*@finsweet\/attributes@2\/attributes\.js)"((?: fs-[a-z-]+="[^"]*")+)><\/script>/g;
+for (const page of Object.values(pagesJson)) {
+  page.head = page.head.replace(FS_TAG, (_m, src, attrs) => {
+    const names = [...attrs.matchAll(/ (fs-[a-z-]+)="([^"]*)"/g)].map((m) => [m[1], m[2]]);
+    return `<script>
+(function () {
+  var s = document.createElement("script");
+  s.type = "module"; s.async = true;
+  s.src = new URL(${JSON.stringify(src)}, location.href).href;
+  ${JSON.stringify(names)}.forEach(function (a) { s.setAttribute(a[0], a[1]); });
+  document.head.appendChild(s);
+})();
+</script>`;
+  });
+}
+
 const home = docs["/"];
 const htmlAttrs = home("html").attr();
 write("src/partials/head-common.html", headCommon.join("\n"));
