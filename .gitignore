@@ -7,3 +7,4 @@ dist/
 _scrape/
 .dev.pid
 .dev.log
+_build_plan/
