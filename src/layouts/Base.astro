@@ -1,0 +1,38 @@
+---
+// Every page: Webflow's shared <head>, nav, footer and scripts, around the page body.
+// Per-page <head> extras (title, meta, JSON-LD) come from src/data/pages.json by path,
+// unless a page passes its own.
+import site from "../data/site.json";
+import pages from "../data/pages.json";
+import headCommon from "../partials/head-common.html?raw";
+import tailCommon from "../partials/tail-common.html?raw";
+import nav from "../partials/nav.html?raw";
+import footer from "../partials/footer.html?raw";
+import { markCurrent } from "../lib/html";
+
+interface Props {
+  path: string;
+  head?: string;
+  tail?: string;
+  wfPage?: string;
+}
+const { path } = Astro.props;
+const page = (pages as Record<string, { wfPage?: string; head?: string; tail?: string }>)[path] ?? {};
+const head = Astro.props.head ?? page.head ?? "";
+const tail = Astro.props.tail ?? page.tail ?? "";
+const wfPage = Astro.props.wfPage ?? page.wfPage;
+---
+<html data-wf-domain={site.wfDomain} data-wf-page={wfPage} data-wf-site={site.wfSite} lang={site.lang}>
+  <head>
+    <Fragment set:html={headCommon} />
+    <Fragment set:html={head} />
+  </head>
+  <body>
+    <Fragment set:html={markCurrent(nav, path)} />
+    <slot />
+    <Fragment set:html={markCurrent(footer, path)} />
+    <Fragment set:html={tailCommon} />
+    <Fragment set:html={tail} />
+    <script is:inline src="/js/waitlist.js"></script>
+  </body>
+</html>

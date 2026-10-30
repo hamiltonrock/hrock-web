@@ -1,0 +1,16 @@
+---
+// Legal text lives in the app (app.hamiltonrock.com/legal/...); these pages frame it.
+import Base from "../../layouts/Base.astro";
+import body from "../../partials/legal.html?raw";
+import legal from "../../data/legal.json";
+import { escapeHtml, fill } from "../../lib/html";
+
+export function getStaticPaths() {
+  // stripe-service-agreement has no embed: netlify.toml redirects it to Stripe.
+  return legal.filter((l) => l.embed).map((l) => ({ params: { slug: l.slug }, props: l }));
+}
+
+const { slug, embed } = Astro.props;
+const html = fill(body, { EMBED: escapeHtml(embed) });
+---
+<Base path={`/policies-legals/${slug}`}><Fragment set:html={html} /></Base>

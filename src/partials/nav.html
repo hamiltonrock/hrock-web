@@ -1,0 +1,27 @@
+<nav class="section navbar"><div class="popup"><div class="pop-up-form"><img src="/wf/6964b145bb356112be6c5850/69c383f40150ae2c442e454a_cross.svg" loading="lazy" data-w-id="25bef131-6a6c-a40e-d0ac-d7b10d55864d" alt="" class="close"><div class="form-block waitlist-form"><form id="wf-form-Waitlist-Form" name="waitlist" data-name="Waitlist Form" method="POST" class="hero-form-flex" action="/" data-netlify="true" netlify-honeypot="website"><input type="hidden" name="form-name" value="waitlist"><div><div class="form-wrapper"><input class="form-field w-input" maxlength="256" name="email" data-name="Email" pattern="^[A-Z0-9a-z._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,64}$" placeholder="Enter your email" type="email" id="email" required=""><input type="submit" data-wait="" class="button form w-button" value="Join the Waitlist"><input class="hp-field w-input" maxlength="256" name="website" data-name="website" aria-hidden="true" placeholder="https://..." type="url" id="website" tabindex="-1"><div class="embed w-embed w-script"><script>
+(function () {
+  var s = document.currentScript;
+  if (!s) return;
+
+  var form = s.closest('form');
+  if (!form || form.dataset.hpBound === '1') return;
+  form.dataset.hpBound = '1';
+
+  form.addEventListener('submit', function (e) {
+    var hp = form.querySelector('input[name="website"]');
+    if (!hp || hp.value.trim() === '') return;
+
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    var wrap = form.closest('.waitlist-form');
+    if (wrap) {
+      var done = wrap.querySelector('.w-form-done');
+      if (done) done.style.display = 'block';
+      form.style.display = 'none';
+    }
+    form.reset();
+  }, true);
+})();
+</script></div></div></div><div class="finish-padding"></div><div class="smallprint home">No spam. No sharing. No selling. Your details are safe with us.</div></form><div class="success w-form-done"><img loading="lazy" src="/wf/6964b145bb356112be6c5850/6964cab50848b3f0de4b3e35_check.svg" alt="" class="success-tick"><div class="thank-you"><strong>You're in. </strong>We’ll be in touch when Hamilton Rock goes live.</div></div><div class="w-form-fail"><div>Oops! Something went wrong while submitting the form.</div></div></div></div></div><div class="w-layout-blockcontainer container nav w-container"><a href="/" class="link-block w-inline-block"><img src="/wf/6964b145bb356112be6c5850/6964bb650f0bbc0947378cfd_hamilton-rock-logo.svg" loading="lazy" alt="" class="nav-logo"></a><div class="mobile-nav-wrap"><a href="#" class="button hollow login w-button">Log in</a><a data-w-id="ae85c691-3592-cf4a-ba56-b9c70b064bdb" href="#" class="button nav w-button">Join Waitlist</a><div data-is-ix2-target="1" class="hamburger" data-w-id="c1a33239-532e-8d81-c5ca-30611fc8afcc" data-animation-type="lottie" data-src="/wf/6964b145bb356112be6c5850/6964c022fe885eb5c2d06670_10ed951c485ca90ab4dd70e3bc3e7900_lottieflow-menu-nav-05-0c63ff-easey.json" data-loop="0" data-direction="1" data-autoplay="0" data-renderer="svg" data-default-duration="4.28" data-duration="0" data-loading="eager" data-ix2-initial-state="0"></div></div><div class="menu"><div class="menu-wrap"><div class="menu-flex"><a href="/" class="home-button w-button">Home</a><a href="/banking" class="nav-button w-button">Banking</a><a href="/cash-flow" class="nav-button w-button">Cash Flow</a><a href="/capital" class="nav-button w-button">Capital</a><a href="/pricing" class="nav-button w-button">Pricing</a><a href="/company" class="nav-button w-button">Company</a><a href="/faq" class="nav-button w-button">FAQ</a></div></div></div></div></nav>
+<div class="nav-spacer"></div>

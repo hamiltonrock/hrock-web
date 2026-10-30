@@ -1,0 +1,32 @@
+[
+  {
+    "slug": "cashback-terms",
+    "title": "Cashback Terms",
+    "embed": "https://app.hamiltonrock.com/legal/terms/cashback/embed/"
+  },
+  {
+    "slug": "cookie-policy",
+    "title": "Cookie Policy",
+    "embed": "https://app.hamiltonrock.com/legal/cookies/general/embed/"
+  },
+  {
+    "slug": "privacy-policy",
+    "title": "Privacy Policy",
+    "embed": "https://app.hamiltonrock.com/legal/privacy/general/embed/"
+  },
+  {
+    "slug": "rewards-terms",
+    "title": "Rewards Terms",
+    "embed": "https://app.hamiltonrock.com/legal/terms/rewards/embed/"
+  },
+  {
+    "slug": "stripe-service-agreement",
+    "title": "Stripe Service Agreement",
+    "embed": ""
+  },
+  {
+    "slug": "terms-of-service",
+    "title": "Terms of Service",
+    "embed": "https://app.hamiltonrock.com/legal/terms/service/embed/"
+  }
+]

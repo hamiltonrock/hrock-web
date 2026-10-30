@@ -1,0 +1,17 @@
+---
+import Base from "../layouts/Base.astro";
+import body from "../partials/pages/faq.html?raw";
+import chipTpl from "../partials/faq-filter-chip.html?raw";
+import tags from "../data/faq-tags.json";
+import pages from "../data/pages.json";
+import { faqItems, renderFaqItem } from "../lib/faq";
+import { escapeHtml, fill } from "../lib/html";
+
+const wid = (pages as any)["/faq"].faqWid;
+const items = await faqItems();
+const html = fill(body, {
+  FAQ_FILTERS: tags.map((t) => fill(chipTpl, { TAG: escapeHtml(t.name) })).join(""),
+  FAQ_ITEMS: items.map((e) => renderFaqItem(e, wid)).join(""),
+});
+---
+<Base path="/faq"><Fragment set:html={html} /></Base>

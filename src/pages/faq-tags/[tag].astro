@@ -1,0 +1,26 @@
+---
+import Base from "../../layouts/Base.astro";
+import body from "../../partials/faq-tag.html?raw";
+import tags from "../../data/faq-tags.json";
+import tagPage from "../../data/faq-tag-page.json";
+import pages from "../../data/pages.json";
+import { faqItems, renderFaqItem } from "../../lib/faq";
+import { escapeHtml, fill } from "../../lib/html";
+
+export function getStaticPaths() {
+  return tags.map((t) => ({ params: { tag: t.slug }, props: { name: t.name } }));
+}
+
+const { name } = Astro.props;
+const path = `/faq-tags/${Astro.params.tag}`;
+const items = await faqItems(name);
+const html = fill(body, {
+  TAG_NAME: escapeHtml(name),
+  FAQ_ITEMS: items.map((e) => renderFaqItem(e, tagPage.wid)).join(""),
+});
+// Tags added after the migration have no scraped <head>; give them a basic one.
+const scraped = (pages as Record<string, { head?: string }>)[path]?.head;
+const head = scraped ?? `<title>FAQs - ${escapeHtml(name)}</title>
+<meta content="Hamilton Rock FAQ &amp; Support - ${escapeHtml(name)}" name="description">`;
+---
+<Base path={path} head={head} wfPage={tagPage.wfPage} tail={tagPage.tail}><Fragment set:html={html} /></Base>

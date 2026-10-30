@@ -1,0 +1,14 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Node comes from .node-version.
+
+# The live site's Stripe agreement page was an empty frame; the footer already links
+# straight to Stripe, so send the old URL there too.
+[[redirects]]
+  from = "/policies-legals/stripe-service-agreement"
+  to = "https://stripe.com/gb/legal/ssa"
+  status = 301
+
+# Netlify serves the canonical host; the apex redirects to www once both are added.
