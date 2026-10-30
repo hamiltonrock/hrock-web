@@ -19,7 +19,8 @@ for (const p of paths) {
   const ta = text(a), tb = text(b);
   if (ta !== tb) { let i = 0; while (ta[i] === tb[i]) i++; issues.push(`text differs at ${i}: «${ta.slice(i - 30, i + 50)}» vs «${tb.slice(i - 30, i + 50)}»`); }
   for (const [sel, attr] of [["img", "src"], ["a", "href"], ["script[src]", "src"], ["[data-src]", "data-src"]]) {
-    const xa = a(sel).map((_, e) => norm(a(e).attr(attr))).get(), xb = b(sel).map((_, e) => b(e).attr(attr)).get().filter((x) => x !== "/js/waitlist.js");
+    // the Finsweet v2 loader tag is created at runtime (see convert.mjs), so it is not in dist
+    const xa = a(sel).map((_, e) => norm(a(e).attr(attr))).get().filter((x) => !x.endsWith("@finsweet/attributes@2/attributes.js")), xb = b(sel).map((_, e) => b(e).attr(attr)).get().filter((x) => x !== "/js/waitlist.js");
     if (JSON.stringify(xa) !== JSON.stringify(xb)) issues.push(`${sel}: ${xa.length} vs ${xb.length}; first diff ${xa.find((x, i) => x !== xb[i])} -> ${xb.find((x, i) => x !== xa[i])}`);
   }
   const ca = a("body *").not("br").filter((_, e) => !(e.name === "script" && a(e).html().includes(".counterup{"))).length, cb = b("body *").not("br, input[name=form-name], script[src=\"/js/waitlist.js\"]").length;
