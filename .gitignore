@@ -1,3 +1,9 @@
 .envrc.local
 .env
 .DS_Store
+node_modules/
+dist/
+.astro/
+_scrape/
+.dev.pid
+.dev.log
