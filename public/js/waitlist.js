@@ -3,7 +3,8 @@
 (function () {
   var local = /\.test$|^localhost$|^127\./.test(location.hostname);
 
-  document.querySelectorAll('.waitlist-form form[data-netlify]').forEach(function (form) {
+  // not form[data-netlify]: Netlify strips that attribute from the published HTML
+  document.querySelectorAll('.waitlist-form form').forEach(function (form) {
     var wrap = form.closest('.waitlist-form');
     var done = wrap.querySelector('.w-form-done');
     var fail = wrap.querySelector('.w-form-fail');
