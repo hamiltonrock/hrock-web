@@ -9,8 +9,10 @@ export ASTRO_TELEMETRY_DISABLED := "1"
 dev:
     #!/usr/bin/env bash
     set -euo pipefail
-    if [ -f .dev.pid ] && kill -0 "$(cat .dev.pid)" 2>/dev/null; then
-        echo "already running (pid $(cat .dev.pid))"; exit 0
+    # `astro dev` runs the real server as a detached child (the launcher may exit), so
+    # look for the server itself rather than trusting .dev.pid
+    if pid=$(pgrep -f "$PWD/node_modules/astro/bin/astro.mjs dev"); then
+        echo "already running (pid $(echo $pid | tr '\n' ' '))"; exit 0
     fi
     [ -d node_modules ] || mise exec -- npm install --no-fund --no-audit
     set -m  # own process group, so stop also ends the server's children
@@ -26,9 +28,15 @@ dev:
 
 stop:
     #!/usr/bin/env bash
-    [ -f .dev.pid ] || { echo "not running"; exit 0; }
-    kill -- -"$(cat .dev.pid)" 2>/dev/null || true
+    [ -f .dev.pid ] && kill -- -"$(cat .dev.pid)" 2>/dev/null
     rm -f .dev.pid
+    # astro dev's server runs detached in its own process group: end it by its command line
+    pkill -f "$PWD/node_modules/astro/bin/astro.mjs dev" 2>/dev/null || true
+    for _ in $(seq 1 20); do
+        pgrep -f "$PWD/node_modules/astro/bin/astro.mjs dev" >/dev/null || { echo "stopped"; exit 0; }
+        sleep 0.25
+    done
+    echo "astro dev still running: $(pgrep -f "$PWD/node_modules/astro/bin/astro.mjs dev" | tr '\n' ' ')" >&2; exit 1
 
 logs:
     tail -f .dev.log
